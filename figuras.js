@@ -14,6 +14,89 @@ const perimetrotriangulo =(lado1, lado2, base) => lado1 + lado2 + base
 
 const areaTriangulo =(base, altura) => (base * altura) / 2
 
+const validarTirnaguloIsoceles = (lado1, lado2, lado3) => {
+
+    let result
+
+    if (lado1 == lado2 == lado3) {
+        result = false
+    } else {
+        if ((lado1 != lado2) && (lado1 != lado3) && (lado2 != lado3) ) {
+            result = false
+        } else {
+            if (lado1 == lado2 && lado3 != lado1) {
+                result = true
+            } else {        
+                if (lado1 == lado3 && lado2 != lado1) {
+                    result = true
+                } else {
+                    if (lado2 == lado3 && lado1 != lado2) {
+                        result = true
+                    } 
+                }
+            }   
+        }
+    }    
+
+    return result
+}
+
+const obtenerBase = ( lado1, lado2, lado3 ) => {
+
+    let result = 0
+
+    if (lado1 == lado2 && lado3 != lado1) {
+        result = lado3
+    } else {        
+        if (lado1 == lado3 && lado2 != lado1) {
+            result = lado2
+        } else {
+            if (lado2 == lado3 && lado1 != lado2) {
+                result = lado1
+            } 
+        }
+    }    
+    return result       
+}
+
+const obtenerLado = (lado1, lado2, lado3) => {
+
+    let result = 0
+
+    if (lado1 == lado2 && lado3 != lado1) {
+        result = lado1
+    } else {        
+        if (lado1 == lado3 && lado2 != lado1) {
+            result = lado1
+        } else {
+            if (lado2 == lado3 && lado1 != lado2) {
+                result = lado2
+            } 
+        }
+    }    
+    return result
+}
+
+const obtenerAltura = (base, lado) => {
+
+    let altura = Math.sqrt(( Math.pow(lado, 2) - ( Math.pow(base, 2) / 4 ) ))
+    return altura
+}
+
+const alturaTriangulo = (lado1, lado2, lado3) => {
+
+    if ( validarTirnaguloIsoceles( lado1, lado2, lado3 ) ) {
+
+        let base = obtenerBase( lado1, lado2, lado3 )
+        let lado = obtenerLado( lado1, lado2, lado3 )
+        let altura = obtenerAltura( base, lado )
+
+        return altura
+    } else {
+        return -1
+    }
+}
+
 console.groupEnd()
 
 // Código del circulo
@@ -76,6 +159,24 @@ let calcularAreaTriangulo = () => {
     const area = areaTriangulo(base, altura)
 
     alert(area)
+}
+
+let calcularAlturaTriangulo = () => {
+    const input1 = document.getElementById("InputTrianguloLado1")
+    const input2 = document.getElementById("InputTrianguloLado2")
+    const input3 = document.getElementById("InputTrianguloBase")
+
+    const lado1 = Number(input1.value)
+    const lado2 = Number(input2.value)
+    const lado3 = Number(input3.value)
+
+    const altura = alturaTriangulo( lado1, lado2, lado3 )
+
+    if (altura == -1) {
+        alert("El triangulo no corresponden a un triangulo Isósceles")
+    } else {
+        alert("La altura del triangulo es: "+ altura)
+    }
 }
 
 //Circulo
